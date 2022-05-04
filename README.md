@@ -658,7 +658,7 @@ var upload = multer({
 - after multer method, create post request
 
 ```js
-// insert a user into database route
+// POST a new user into database route
 router.post('/add', upload, (req, res) => {
   const user = new User({
     name: req.body.name,
@@ -682,7 +682,7 @@ router.post('/add', upload, (req, res) => {
 ```
 
 - #### index.ejs
-- Create alert when data is successfully add to the database
+- Create alert when data is successfully added to the database
 
 ```html
 <!-- <div class="row my-4"> -->
@@ -703,4 +703,184 @@ router.post('/add', upload, (req, res) => {
 
   <!-- <div class="table-responsive"> -->
 </div>
+```
+
+---
+
+### GET All Users
+
+- #### routes.js
+
+```js
+.
+.
+// HOME PAGE
+// GET all users route
+router.get('/', (req, res) => {
+  User.find().exec((err, users) => {
+    if (err) {
+      res.json({ message: err.message });
+    } else {
+      res.render('index.ejs', {
+        title: 'Home Page',
+        users: users,
+      });
+    }
+  });
+});
+```
+
+- #### index.ejs
+- if else statement to create conditions
+- <% **if (users != '')** { %>
+  **SHOW TABLE**
+  <% } else { %>
+  **USERS NOT FOUND**
+  <% } %>
+
+####
+
+- forEach method to unwrap users data
+- <% **users.forEach**((user, index) => { %>
+  \<td><%= user.name %>\</td>
+  <% }) %>
+
+```html
+<!-- <% } %> -->
+
+<div class="table-responsive">
+  <% if (users != '') { %>
+  <table class="table table-striped text-center my-3">
+    <!-- TABLE HEAD -->
+    <thead>
+      <tr class="table-dark">
+        <th>ID</th>
+        <th>Image</th>
+        <th>Name</th>
+        <th>E-Mail</th>
+        <th>Phone</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+
+    <!-- TABLE BODY -->
+    <tbody>
+      <% users.forEach((user, index) => { %>
+      <tr class="align-middle">
+        <td><%= index %></td>
+        <td>
+          <img
+            src="<%= user.image %>"
+            alt="<%= user.name %>"
+            width="50"
+            class="img-thumbnail"
+          />
+        </td>
+        <td><%= user.name %></td>
+        <td><%= user.email %></td>
+        <td><%= user.phone %></td>
+        <td>
+          <a href="/edit/<%= user._id %>" class="text-success">
+            <i class="fas fa-edit fa-lg mx-1"></i>
+          </a>
+
+          <a href="/delete/<%= user._id %>" class="text-danger">
+            <i class="fas fa-trash fa-lg mx-1"></i>
+          </a>
+        </td>
+      </tr>
+      <% }) %>
+    </tbody>
+  </table>
+  <% } else { %>
+  <h1 class="text-center text-secondary mt-5">
+    No users found in the database
+  </h1>
+  <% } %>
+</div>
+
+<!-- </div> -->
+```
+
+- #### main.js
+- Create static folder for uploads to show image
+
+```js
+// middlewares
+.
+.
+// create static folder for uploads
+app.use(express.static('./uploads'));
+```
+
+- #### Pagination
+
+```url
+https://datatables.net/download/
+```
+
+- Step 1. Choose a styling framework
+  - Bootstrap 4
+- Step 2. Select packages
+  - DataTables
+- Step 3. Pick a download method
+
+  - CDN
+  - Minify
+  - Concatenate
+
+- Copy \<link> & \<script> tag and paste in header & footer
+
+```html
+<!-- PASTE IN HEADER -->
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="https://cdn.datatables.net/v/bs4/dt-1.11.5/datatables.min.css"
+/>
+
+<!-- PASTE IN FOOTER -->
+<script
+  type="text/javascript"
+  src="https://cdn.datatables.net/v/bs4/dt-1.11.5/datatables.min.js"
+></script>
+```
+
+- #### header.ejs
+
+```html
+<!-- font-awesome -->
+
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="https://cdn.datatables.net/v/bs4/dt-1.11.5/datatables.min.css"
+/>
+```
+
+- #### footer.ejs
+
+```html
+<!-- SCRIPT -->
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
+  integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+></script>
+
+<!-- twitter-bootstrap -->
+
+<script
+  type="text/javascript"
+  src="https://cdn.datatables.net/v/bs4/dt-1.11.5/datatables.min.js"
+></script>
+
+<script>
+  $(document).ready(function () {
+    $('table').DataTable({
+      order: [0, 'desc'],
+    });
+  });
+</script>
 ```

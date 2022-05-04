@@ -38,6 +38,9 @@ app.use((req, res, next) => {
   next();
 });
 
+// create static folder for uploads
+app.use(express.static('./uploads'));
+
 // set template engine
 app.set('view engine', 'ejs');
 

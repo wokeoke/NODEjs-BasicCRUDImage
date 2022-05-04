@@ -15,8 +15,10 @@
         <strong> <%= message.message %> </strong>
       </div>
       <% } %>
+
       <div class="table-responsive">
-        <table class="table table-striped text-center">
+        <% if (users != '') { %>
+        <table class="table table-striped text-center my-3">
           <!-- TABLE HEAD -->
           <thead>
             <tr class="table-dark">
@@ -31,24 +33,38 @@
 
           <!-- TABLE BODY -->
           <tbody>
-            <tr>
-              <td>1</td>
-              <td><img src="" alt="" /></td>
-              <td>John Doe</td>
-              <td>john@email.com</td>
-              <td>1234567</td>
+            <% users.forEach((user, index) => { %>
+            <tr class="align-middle">
+              <td><%= index %></td>
               <td>
-                <a href="#" class="text-success">
+                <img
+                  src="<%= user.image %>"
+                  alt="<%= user.name %>"
+                  width="50"
+                  class="img-thumbnail"
+                />
+              </td>
+              <td><%= user.name %></td>
+              <td><%= user.email %></td>
+              <td><%= user.phone %></td>
+              <td>
+                <a href="/edit/<%= user._id %>" class="text-success">
                   <i class="fas fa-edit fa-lg mx-1"></i>
                 </a>
 
-                <a href="#" class="text-danger">
+                <a href="/delete/<%= user._id %>" class="text-danger">
                   <i class="fas fa-trash fa-lg mx-1"></i>
                 </a>
               </td>
             </tr>
+            <% }) %>
           </tbody>
         </table>
+        <% } else { %>
+        <h1 class="text-center text-secondary mt-5">
+          No users found in the database
+        </h1>
+        <% } %>
       </div>
     </div>
   </div>

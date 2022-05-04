@@ -17,7 +17,7 @@ var upload = multer({
   storage: storage,
 }).single('image');
 
-// insert a user into database route
+// POST a new user into database route
 router.post('/add', upload, (req, res) => {
   const user = new User({
     name: req.body.name,
@@ -40,8 +40,18 @@ router.post('/add', upload, (req, res) => {
 });
 
 // HOME PAGE
+// GET all users route
 router.get('/', (req, res) => {
-  res.render('index.ejs', { title: 'Home Page' });
+  User.find().exec((err, users) => {
+    if (err) {
+      res.json({ message: err.message });
+    } else {
+      res.render('index.ejs', {
+        title: 'Home Page',
+        users: users,
+      });
+    }
+  });
 });
 
 // ADD USER PAGE
