@@ -59,4 +59,23 @@ router.get('/add', (req, res) => {
   res.render('add_users.ejs', { title: 'Add Users' });
 });
 
+// EDIT A USER
+router.get('/edit/:id', (req, res) => {
+  let id = req.params.id;
+  User.findById(id, (err, user) => {
+    if (err) {
+      res.redirect('/');
+    } else {
+      if (!user) {
+        res.redirect('/');
+      } else {
+        res.render('edit_users.ejs', {
+          title: 'Edit User',
+          user: user,
+        });
+      }
+    }
+  });
+});
+
 module.exports = router;
