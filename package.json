@@ -1,0 +1,27 @@
+{
+  "name": "nodejs-basiccrudimage",
+  "version": "1.0.0",
+  "description": "NODEjs Basic CRUD Application with Image",
+  "main": "main.js",
+  "scripts": {
+    "start": "nodemon main.js"
+  },
+  "keywords": [
+    "image",
+    "crud",
+    "node"
+  ],
+  "author": "armadanks",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "ejs": "^3.1.6",
+    "express": "^4.17.1",
+    "express-session": "^1.17.1",
+    "mongoose": "^5.11.15",
+    "multer": "^1.4.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.6"
+  }
+}
