@@ -1013,3 +1013,71 @@ router.get('/edit/:id', (req, res) => {
   });
 });
 ```
+
+---
+
+### Update User
+
+- #### routes.js
+
+```js
+.
+const fs = require('fs');
+.
+.
+// EDIT A USER
+.
+.
+// UPDATE USER
+router.post('/update/:id', upload, (req, res) => {
+  let id = req.params.id;
+  let new_image = '';
+
+  if (req.file) {
+    new_image = req.file.filename;
+    try {
+      fs.unlinkSync('./uploads/' + req.body.old_image);
+    } catch (err) {
+      console.log(err);
+    }
+  } else {
+    new_image = req.body.old_image;
+  }
+
+  User.findByIdAndUpdate(
+    id,
+    {
+      name: req.body.name,
+      email: req.body.email,
+      phone: req.body.phone,
+      image: new_image,
+    },
+    (err, result) => {
+      if (err) {
+        res.json({ message: err.message, type: 'danger' });
+      } else {
+        req.session.message = {
+          type: 'success',
+          message: 'User updated successfully',
+        };
+        res.redirect('/');
+      }
+    }
+  );
+});
+```
+
+- #### edit_users.ejs
+
+```html
+<!-- IMAGE INPUT -->
+<div class="mb-3">
+  <label for="image" class="form-label">Select Image</label>
+  <input type="file" name="image" class="form-control form-control-lg" />
+  <img src="/<%= user.image %>" width="100" class="img-thumbnail mt-1" />
+</div>
+
+<input type="hidden" name="old_image" value="<%= user.image %>" />
+
+<!-- SUBMIT BUTTON -->
+```
