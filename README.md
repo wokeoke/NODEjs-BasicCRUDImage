@@ -30,6 +30,7 @@ npm start
 
 ```
 PORT = 5000
+DB_URI =
 ```
 
 ---
@@ -55,6 +56,30 @@ app.get('/', (req, res) => {
 
 app.listen(PORT, () => {
   console.log(`Server started at http://localhost:${PORT}`);
+});
+```
+
+---
+
+### Database Connection
+
+- main.js
+
+```js
+const PORT = process.env.PORT || 4000;
+.
+.
+// database connection
+mongoose.connect(process.env.DB_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+const db = mongoose.connection;
+db.on('error', (error) => {
+  console.log(error);
+});
+db.once('open', () => {
+  console.log('Connected to the Database!');
 });
 ```
 
