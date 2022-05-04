@@ -1033,6 +1033,7 @@ router.post('/update/:id', upload, (req, res) => {
   let id = req.params.id;
   let new_image = '';
 
+  // update new image or use old image from directory
   if (req.file) {
     new_image = req.file.filename;
     try {
@@ -1080,4 +1081,37 @@ router.post('/update/:id', upload, (req, res) => {
 <input type="hidden" name="old_image" value="<%= user.image %>" />
 
 <!-- SUBMIT BUTTON -->
+```
+
+---
+
+### Delete User
+
+- #### routes.js
+
+```js
+// DELETE USER
+router.get('/delete/:id', (req, res) => {
+  let id = req.params.id;
+  User.findByIdAndRemove(id, (err, result) => {
+    // remove image from directory
+    if (result.image) {
+      try {
+        fs.unlinkSync('./uploads/' + result.image);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+
+    if (err) {
+      res.json({ message: err.message });
+    } else {
+      req.session.message = {
+        type: 'info',
+        message: 'User deleted successfully!',
+      };
+      res.redirect('/');
+    }
+  });
+});
 ```
