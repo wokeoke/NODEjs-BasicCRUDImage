@@ -20,6 +20,27 @@ db.once('open', () => {
   console.log('Connected to the Database!');
 });
 
+// middlewares
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+
+app.use(
+  session({
+    secret: 'my secret key',
+    saveUninitialized: true,
+    resave: false,
+  })
+);
+
+app.use((req, res, next) => {
+  res.locals.message = req.session.message;
+  delete req.session.message;
+  next();
+});
+
+// set template engine
+app.set('view engine', 'ejs');
+
 app.get('/', (req, res) => {
   res.send('BASIC CRUD APP WITH IMAGE');
 });
