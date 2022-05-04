@@ -49,12 +49,17 @@ root
 ├── routes
 │   └── routes.js
 │
+├── uploads
+│   ├── sample_image-1.jpg
+│   └── sample_image-2.jpg
+│
 └── views
     ├── layout
     │   ├── footer.ejs
     │   └── header.ejs
     │
     ├── add_users.ejs
+    ├── edit_users.ejs
     └── index.ejs
 ```
 
