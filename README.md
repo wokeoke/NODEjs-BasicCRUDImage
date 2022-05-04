@@ -567,3 +567,57 @@ router.get('/add', (req, res) => {
 
 <%- include('layout/footer.ejs') %>
 ```
+
+---
+
+### Homepage Table
+
+- index.ejs
+
+```html
+<%- include('layout/header.ejs') %>
+
+<div class="container">
+  <div class="row my-4">
+    <div class="col-lg-12">
+      <div class="table-responsive">
+        <table class="table table-striped text-center">
+          <!-- TABLE HEAD -->
+          <thead>
+            <tr class="table-dark">
+              <th>ID</th>
+              <th>Image</th>
+              <th>Name</th>
+              <th>E-Mail</th>
+              <th>Phone</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+
+          <!-- TABLE BODY -->
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td><img src="" alt="" /></td>
+              <td>John Doe</td>
+              <td>john@email.com</td>
+              <td>1234567</td>
+              <td>
+                <a href="#" class="text-success">
+                  <i class="fas fa-edit fa-lg mx-1"></i>
+                </a>
+
+                <a href="#" class="text-danger">
+                  <i class="fas fa-trash fa-lg mx-1"></i>
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('layout/footer.ejs') %>
+```
