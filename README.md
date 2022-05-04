@@ -152,3 +152,31 @@ const userSchema = new mongoose.Schema({
 
 module.exports = mongoose.model('User', userSchema);
 ```
+
+---
+
+### Routes
+
+- routes.js
+- Path routes/routes.js
+
+```js
+const express = require('express');
+const router = express.Router();
+
+router.get('/users', (req, res) => {
+  res.send('All Users');
+});
+
+module.exports = router;
+```
+
+- main.js
+
+```js
+// set template engine
+.
+.
+// route prefix
+app.use('/', require('./routes/routes'));
+```
